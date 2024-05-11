@@ -12,7 +12,7 @@ class AddNoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_add_note)
+        setContentView(binding.root) // Set content view using binding.root
 
         db = NoteDatabaseHelper(this)
 
