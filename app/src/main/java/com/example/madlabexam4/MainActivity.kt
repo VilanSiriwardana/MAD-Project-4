@@ -1,10 +1,10 @@
+package com.example.madlabexam4
+
+import NoteDatabaseHelper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.madlabexam4.AddNoteActivity
-import com.example.madlabexam4.NotesAdapter
 import com.example.madlabexam4.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
