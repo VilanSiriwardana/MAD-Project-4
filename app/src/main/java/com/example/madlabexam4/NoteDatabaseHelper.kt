@@ -146,4 +146,28 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
 
+    suspend fun filterNotesByPriority(priority: String): List<Note> {
+        return withContext(Dispatchers.IO) {
+            val notesList = mutableListOf<Note>()
+            val db = readableDatabase
+            val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_PRIORITY = ?"
+            val cursor = db.rawQuery(query, arrayOf(priority))
+            cursor.use {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+                    val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
+                    val content = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT))
+                    val priority = Priority.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PRIORITY)))
+                    val deadlineString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DEADLINE))
+                    val deadline = deadlineString?.let {
+                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it)
+                    } ?: Date() // Provide a default value if the deadline is null
+                    notesList.add(Note(id, title, content, priority, deadline))
+                }
+            }
+            notesList
+        }
+    }
+
+
 }

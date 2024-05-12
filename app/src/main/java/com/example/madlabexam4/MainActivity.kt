@@ -4,6 +4,9 @@ import NoteDatabaseHelper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madlabexam4.databinding.ActivityMainBinding
@@ -38,6 +41,32 @@ class MainActivity : AppCompatActivity() {
             val notes = db.getAllNotesAsync()
             notesAdapter.refreshData(notes)
         }
+
+
+        // Setup priority filter spinner
+        val priorityOptions = arrayOf("All", "High", "Medium", "Low")
+        val priorityAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, priorityOptions)
+        binding.prioritySpinner.adapter = priorityAdapter
+
+        binding.prioritySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedPriority = priorityOptions[position]
+                if (selectedPriority == "All") {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val notes = db.getAllNotesAsync()
+                        notesAdapter.refreshData(notes)
+                    }
+                } else {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val filteredNotes = db.filterNotesByPriority(selectedPriority)
+                        notesAdapter.refreshData(filteredNotes)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
 
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
