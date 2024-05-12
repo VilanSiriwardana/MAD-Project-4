@@ -9,11 +9,7 @@ import kotlinx.coroutines.withContext
 
 class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    suspend fun getAllNotesAsync(): List<Note> {
-        return withContext(Dispatchers.IO) {
-            getAllNotes()
-        }
-    }
+    suspend fun getAllNotesAsync(): List<Note> = withContext(Dispatchers.IO) { getAllNotes() }
 
     companion object {
         private const val DATABASE_NAME = "notesapp.db"
@@ -37,33 +33,28 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     suspend fun insertNote(note: Note) {
         withContext(Dispatchers.IO) {
-            val db = writableDatabase
-            val values = ContentValues().apply {
-                put(COLUMN_TITLE, note.title)
-                put(COLUMN_CONTENT, note.content)
+            writableDatabase.use { db ->
+                ContentValues().apply {
+                    put(COLUMN_TITLE, note.title)
+                    put(COLUMN_CONTENT, note.content)
+                }.also { values ->
+                    db.insert(TABLE_NAME, null, values)
+                }
             }
-            db.insert(TABLE_NAME, null, values)
-            db.close()
         }
     }
 
-    suspend fun getAllNotes(): List<Note> {
-        return withContext(Dispatchers.IO) {
+    suspend fun getAllNotes(): List<Note> = withContext(Dispatchers.IO) {
+        readableDatabase.use { db ->
             val notesList = mutableListOf<Note>()
-            val db = readableDatabase
-            val query = "SELECT * FROM $TABLE_NAME"
-            val cursor: Cursor? = db.rawQuery(query, null)
-            cursor?.use {
+            db.rawQuery("SELECT * FROM $TABLE_NAME", null).use { cursor ->
                 while (cursor.moveToNext()) {
                     val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
                     val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
                     val content = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT))
-                    val note = Note(id, title, content)
-                    notesList.add(note)
+                    notesList.add(Note(id, title, content))
                 }
             }
-            cursor?.close()
-            db.close()
             notesList
         }
     }
@@ -97,7 +88,7 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 }
             }
             cursor?.close()
-            db.close()
+//            db.close()
             note
         }
     }
@@ -108,7 +99,29 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             val whereClause = "$COLUMN_ID = ?"
             val whereArgs = arrayOf(noteId.toString())
             db.delete(TABLE_NAME, whereClause, whereArgs)
-            db.close()
+//            db.close()
         }
     }
+
+    suspend fun searchNotes(query: String): List<Note> {
+        return withContext(Dispatchers.IO) {
+            val notesList = mutableListOf<Note>()
+            val db = readableDatabase
+            val selection = "$COLUMN_TITLE LIKE ? OR $COLUMN_CONTENT LIKE ?"
+            val selectionArgs = arrayOf("%$query%", "%$query%")
+            val cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null)
+            cursor.use {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+                    val title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE))
+                    val content = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT))
+                    val note = Note(id, title, content)
+                    notesList.add(note)
+                }
+            }
+//            db.close()
+            notesList
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import NoteDatabaseHelper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madlabexam4.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +37,26 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             val notes = db.getAllNotesAsync()
             notesAdapter.refreshData(notes)
+        }
+
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchNotes(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { searchNotes(it) }
+                return true
+            }
+        })
+    }
+
+    private fun searchNotes(query: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val filteredNotes = db.searchNotes(query)
+            notesAdapter.refreshData(filteredNotes)
         }
     }
 

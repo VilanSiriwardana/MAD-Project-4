@@ -18,9 +18,12 @@ import kotlinx.coroutines.launch
 class NotesAdapter(private var notes: List<Note>, private val context: Context) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     private val db: NoteDatabaseHelper = NoteDatabaseHelper(context)
+    private var filteredNotes: List<Note> = notes
+
     fun refreshData(newNotes: List<Note>) {
         CoroutineScope(Dispatchers.Main).launch {
-            notes = db.getAllNotesAsync()
+            notes = newNotes
+            filteredNotes = newNotes
             notifyDataSetChanged()
         }
     }
@@ -37,7 +40,7 @@ class NotesAdapter(private var notes: List<Note>, private val context: Context) 
         return NoteViewHolder(view)
     }
 
-    override fun getItemCount(): Int = notes.size
+    override fun getItemCount(): Int = filteredNotes.size
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
@@ -63,7 +66,18 @@ class NotesAdapter(private var notes: List<Note>, private val context: Context) 
                 }
             }
         }
+    }
 
 
+
+    fun filter(query: String) {
+        filteredNotes = if (query.isEmpty()) {
+            notes
+        } else {
+            notes.filter {
+                it.title.contains(query, ignoreCase = true) || it.content.contains(query, ignoreCase = true)
+            }
+        }
+        notifyDataSetChanged()
     }
 }

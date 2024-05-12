@@ -12,31 +12,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins"
         android:text="Notes."
-        android:layout_marginStart="18dp" android:textColor="@color/blue"
+        android:textColor="@color/blue"
         android:textSize="24sp" />
+
+    <!-- Add SearchView -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notesHeading"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:queryHint="Search Notes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:padding="16dp"/>
+        android:layout_marginTop="75dp"
+        android:padding="16dp" />
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/addButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginBottom="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp"
-    android:src="@drawable/add"
-    app:tint= "@color/white"
-    android:backgroundTint="@color/blue" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/blue"
+        android:src="@drawable/add"
+        app:tint="@color/white" />
+
+
 
 </RelativeLayout>
