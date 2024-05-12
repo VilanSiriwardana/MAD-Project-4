@@ -36,7 +36,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="30dp"
                 android:src="@drawable/edit"
-                android:contentDescription="@string/update_note" />
+                android:contentDescription="@string/update_task" />
 
             <ImageView
                 android:id="@+id/deleteButton"
@@ -44,7 +44,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/delete"
-                android:contentDescription="@string/delete_note" />
+                android:contentDescription="@string/delete_task" />
         </RelativeLayout>
 
         <TextView

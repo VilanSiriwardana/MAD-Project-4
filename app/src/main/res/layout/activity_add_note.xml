@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins"
-        android:text="Add Note."
+        android:text="@string/add_note"
         android:textColor="@color/blue"
         android:textSize="24sp" />
 
@@ -32,7 +32,7 @@
         android:id="@+id/titleEditText"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:hint="Enter the title"
+        android:hint="@string/title_hint"
         android:padding="12dp"
         android:textSize="20sp"
         android:layout_below="@id/addNoteHeading"
@@ -50,17 +50,29 @@
         android:background="@drawable/blue_border"
         android:fontFamily="@font/poppins"
         android:gravity="top"
-        android:hint="Enter the description"
+        android:hint="@string/des_hint"
         android:padding="12dp"
         android:textSize="18sp"
         android:minHeight="200dp"/>
+
+    <!-- TextView for Select Priority -->
+    <TextView
+        android:id="@+id/selectPriorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_text_view"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/contentEditText"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"/>
 
     <!-- Priority Spinner -->
     <Spinner
         android:id="@+id/prioritySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/contentEditText"
+        android:layout_below="@id/selectPriorityTextView"
         android:layout_marginTop="12dp"
         android:background="@drawable/blue_border"
         android:padding="12dp"/>

@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins"
-        android:text="Edit Note."
+        android:text="@string/edit_task"
         android:textColor="@color/blue"
         android:textSize="24sp" />
 
@@ -55,12 +55,24 @@
         android:layout_marginTop="12dp"
         android:minHeight="200dp"/>
 
+    <!-- TextView for Select Priority -->
+    <TextView
+        android:id="@+id/selectPriorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_text_view"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/updateContentEditText"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"/>
+
     <!-- Priority Spinner -->
     <Spinner
         android:id="@+id/updatePrioritySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/updateContentEditText"
+        android:layout_below="@id/selectPriorityTextView"
         android:layout_marginTop="12dp"
         android:padding="12dp"
         android:background="@drawable/blue_border"/>

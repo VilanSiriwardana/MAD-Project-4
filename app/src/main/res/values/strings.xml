@@ -2,15 +2,19 @@
     <string name="app_name">MADLabExam4</string>
 
     <!-- Main Activity UI elements -->
-    <string name="notes_title">Notes.</string>
-    <string name="search_hint">Search Notes</string>
-    <string name="add_note">Add Note</string>
+    <string name="task_title">Tasks.</string>
+    <string name="search_hint">Search Tasks</string>
+    <string name="add_note">Add Task</string>
+    <string name="title_hint">Enter the title</string>
+    <string name="des_hint">Enter the description</string>
 
     <string name="title_placeholder">Title</string>
     <string name="content_placeholder">Content</string>
+    <string name="priority_text_view">Select Priority:</string>
     <string name="priority_placeholder">Priority Placeholder</string>
     <string name="deadline_placeholder">Deadline Placeholder</string>
 
-    <string name="update_note">Update Note</string>
-    <string name="delete_note">Delete Note</string>
+    <string name="update_task">Update Tasks</string>
+    <string name="delete_task">Delete Tasks</string>
+    <string name="edit_task">Edit Task.</string>
 </resources>
