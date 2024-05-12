@@ -23,7 +23,7 @@
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title_placeholder"
             android:fontFamily="@font/poppins"
             android:textColor="@color/blue"
             android:textSize="18sp"
@@ -35,21 +35,23 @@
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="30dp"
-            android:src="@drawable/edit" />
+            android:src="@drawable/edit"
+            android:contentDescription="@string/update_note" />
 
         <ImageView
             android:id="@+id/deleteButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/delete" />
+            android:src="@drawable/delete"
+            android:contentDescription="@string/delete_note" />
     </RelativeLayout>
 
         <TextView
             android:id="@+id/contentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Content"
+            android:text="@string/content_placeholder"
             android:fontFamily="@font/poppins"
             android:maxLines="3"
             android:layout_marginTop="4dp" />

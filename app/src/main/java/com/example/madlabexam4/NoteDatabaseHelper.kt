@@ -93,15 +93,18 @@ class NoteDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         }
     }
 
-    suspend fun deleteNote(noteId: Int) {
-        withContext(Dispatchers.IO) {
+    suspend fun deleteNote(noteId: Int): Boolean {
+        return withContext(Dispatchers.IO) {
             val db = writableDatabase
             val whereClause = "$COLUMN_ID = ?"
             val whereArgs = arrayOf(noteId.toString())
-            db.delete(TABLE_NAME, whereClause, whereArgs)
-//            db.close()
+            val rowsAffected = db.delete(TABLE_NAME, whereClause, whereArgs)
+            db.close()
+            // If rowsAffected > 0, deletion was successful
+            rowsAffected > 0
         }
     }
+
 
     suspend fun searchNotes(query: String): List<Note> {
         return withContext(Dispatchers.IO) {

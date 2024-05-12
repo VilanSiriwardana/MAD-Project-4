@@ -57,15 +57,23 @@ class NotesAdapter(private var notes: List<Note>, private val context: Context) 
         holder.deleteButton.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val db = NoteDatabaseHelper(context)
-                db.deleteNote(note.id)
-                val updatedNotes = db.getAllNotes()
-                holder.itemView.post {
-                    notes = updatedNotes
-                    notifyDataSetChanged()
-                    Toast.makeText(context, "Note Deleted", Toast.LENGTH_SHORT).show()
+                if (db.deleteNote(note.id)) {  // Ensures the note is successfully deleted
+                    val updatedNotes = db.getAllNotes()
+                    launch(Dispatchers.Main) {
+                        // Update both lists and notify adapter on the main thread
+                        notes = updatedNotes
+                        filteredNotes = updatedNotes
+                        notifyDataSetChanged()
+                        Toast.makeText(context, "Note Deleted", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(context, "Failed to delete note", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
+
     }
 
 
