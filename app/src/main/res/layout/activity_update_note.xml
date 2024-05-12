@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/updateContentEditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Enter the description"
         android:gravity="top"
         android:padding="12dp"
@@ -52,6 +52,30 @@
         android:fontFamily="@font/poppins"
         android:background="@drawable/blue_border"
         android:layout_below="@id/updateTitleEditText"
+        android:layout_marginTop="12dp"
+        android:minHeight="200dp"/>
+
+    <!-- Priority Spinner -->
+    <Spinner
+        android:id="@+id/updatePrioritySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateContentEditText"
+        android:layout_marginTop="12dp"
+        android:padding="12dp"/>
+
+    <!-- Deadline EditText -->
+    <EditText
+        android:id="@+id/updateDeadlineEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the deadline (YYYY-MM-DD)"
+        android:inputType="date"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins"
+        android:background="@drawable/blue_border"
+        android:layout_below="@id/updatePrioritySpinner"
         android:layout_marginTop="12dp" />
 
 </RelativeLayout>
